@@ -34,3 +34,76 @@ is a high-dimensional vector of other regressors or features, called
 question. In this segment we discuss estimation and confidence intervals
 for β. We also provide a case study, in which we examine the effect of
 gun ownership on homicide rates.
+
+We can rewrite the model in the partialled-out form as:
+
+    Y˜ = βD˜ +ǫ,    E(ǫD˜) = 0, (1)
+
+where Y˜ and D˜ are the residuals left after predicting Y and D using Z,
+namely,
+
+``` 
+Y˜ := Y − ℓ(Z), D˜ := D − m(Z),
+   
+```
+
+where ℓ(Z) and m(Z) aredefined as conditional expectations of Y and D
+given Z:
+
+    ℓ(Z) := E[Y | Z],   m(Z) := E[D | Z].
+
+The equation EǫD˜ = 0 above is the Normal Equation for the population
+regression of Y˜ on D˜. This implies the following result:
+
+Theorem (Frisch-Waugh-Lovell for Partially Linear Model) The population
+regression coefficient β can be recovered from the population linear
+regression of Y˜ on D˜:
+
+    β = argminE(Y˜ − bD˜)2 = (ED˜ 2)− 1ED˜Y˜ , b
+
+where β is uniquely defined if D can not be perfectly predicted by Z,
+i.e. ED˜2 \> 0.
+
+## Estimation of β: The Procedure
+
+1.  Our estimation procedure for β in the sample will mimic the
+    partialling out procedure in the population.
+2.  In order to avoid thepossibility of overfitting we rely on sample
+    splitting. Wehave data (Yi,Di ,Zi )ni=1. We randomly split the data
+    into two halves: one half will serve as an auxilliary sample, which
+    will be used to estimate the best predictors of Y and D, given Z,
+    and then estimate the residualized Y and residualized D. Another
+    half will serve as the main sample and will be used to estimate the
+    regression coefficients.
+3.  Let A denote the set of observation names in the auxiliary sample,
+    and M the set of observations names in the main sample.
+
+#### Step 1:
+
+Uusing auxiliary sample, we employ modern nonlinear regression methodsto
+build estimatorsbℓ(Z) and mb(Z) of thebest predictors ℓ(Z) and m(Z).
+Then, using themain sample, we obtain theestimatesof theresidualized
+quantities:
+
+    Yˇi = Yi − bℓ(Zi), Dˇi = Di − mb(Zi ), for each i ∈ M, 
+
+and then using ordinary least squaresof Yˇi on Dˇi obtain the estimateof
+β, denoted by βb1 and defined by the formula:
+
+    βb1 = argmin ∑ (Yˇi —bDˇi )^2.       b i∈M
+
+#### Step 2:
+
+we reversetheroles of theauxiliary and main samples, repeat Step 1, and
+obtain another estimateof β, denoted by βb^2.
+
+#### Step 3:
+
+we taketheaverage of thetwo estimatesfrom Steps1 and 2 obtaining
+thefinal estimate:
+
+``` 
+    βb = 21βb1+ 21βb2.
+```
+
+## Inference Result: Theory
